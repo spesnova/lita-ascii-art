@@ -1,19 +1,29 @@
 require "artii"
+require "lita-keyword-arguments"
 
 module Lita
   module Handlers
     class AsciiArt < Handler
-      route(/^ascii\s+(.*)/i, :ascii_from_text, command: true, help: {
-        t("help.ascii_key") => t("help.ascii_value")})
+      route(
+        /^aa\s+(\w*)/i,
+        :ascii_art_from_text,
+        command: true,
+        kwargs: {
+          font: {
+            short: "f",
+            default: "standard",
+          }
+        },
+        help: { t("help.ascii_key") => t("help.ascii_value") },
+      )
 
-        @@art = Artii::Base.new :font => 'standard'
-
-      def ascii_from_text(response)
-        s = ''
+      def ascii_art_from_text(response)
+        res = ""
+        a = Artii::Base.new(font: response.extensions[:kwargs][:font])
         response.matches.first.each do |c|
-          s += @@art.asciify(c)
+          res += a.asciify(c)
         end
-        response.reply s
+        response.reply res
       end
     end
 

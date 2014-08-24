@@ -3,5 +3,5 @@ en:
     handlers:
       ascii_art:
         help:
-          ascii_key: "ascii TEXT"
-          ascii_value: "Generate ASCII art from TEXT."
+          ascii_key: "aa <TEXT> [--font | -f <FONT>]"
+          ascii_value: "Generate ASCII art from <TEXT>."
